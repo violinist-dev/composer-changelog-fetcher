@@ -42,5 +42,4 @@ class ChangelogRetrieverTest extends TestCase
         $log = $retriever->retrieveChangelog('psr/log', $fake_lock, '1.0.0', '1.0.1');
         $this->assertEquals('[{"hash":"ababab","message":"Change 1"},{"hash":"fefefe","message":"Change 2"}]', $log->getAsJson());
     }
-
 }

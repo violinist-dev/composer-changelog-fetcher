@@ -13,6 +13,7 @@ shared: &shared
           paths:
               - ./vendor
     - run: ./vendor/bin/phpunit
+    - run: ./vendor/bin/phpcs -p -n
 
 
 jobs:
