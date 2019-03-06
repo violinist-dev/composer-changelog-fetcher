@@ -34,3 +34,12 @@ jobs:
     docker:
       - image: circleci/php:7.3-node-browsers
     <<: *shared
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - "php70"
+      - "php71"
+      - "php72"
+      - "php73"
