@@ -14,6 +14,7 @@ shared: &shared
               - ./vendor
     - run: ./vendor/bin/phpunit
     - run: ./vendor/bin/phpcs -p -n
+    - run: ./vendor/bin/php-coveralls -v
 
 
 jobs:
