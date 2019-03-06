@@ -59,18 +59,6 @@ class ChangelogRetriever
         if (empty($changelog_string)) {
             throw new \Exception('The changelog string was empty for package ' . $package_name);
         }
-        // If the changelog is too long, truncate it.
-        if (mb_strlen($changelog_string) > 60000) {
-            // Truncate it to 60K.
-            $changelog_string = mb_substr($changelog_string, 0, 60000);
-            // Then split it into lines.
-            $lines = explode("\n", $changelog_string);
-            // Cut off the last one, since it could be partial.
-            array_pop($lines);
-            // Then append a line saying the changelog was too long.
-            $lines[] = sprintf('%s ...more commits found, but message is too long for PR', $version_to);
-            $changelog_string = implode("\n", $lines);
-        }
         // Then split it into lines that makes sense.
         $log = ChangeLogData::createFromString($changelog_string);
         // Then assemble the git source.
