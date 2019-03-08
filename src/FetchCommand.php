@@ -13,7 +13,7 @@ class FetchCommand extends Command
 {
     protected $retriever;
 
-    protected static $defaultName = 'changelog-fetcher:fetch';
+    protected static $defaultName = 'fetch';
 
     public function __construct(ChangelogRetriever $retriever)
     {
