@@ -6,6 +6,9 @@
     "autoload": {
       "psr-4": {"Violinist\\ChangelogFetcher\\": "src"}
     },
+    "autoload-dev": {
+        "psr-4": {"Violinist\\ChangelogFetcher\\Tests\\": "tests"}
+    },
     "bin": [
       "changelog-fetcher"
     ],

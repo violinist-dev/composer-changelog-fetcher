@@ -2,13 +2,12 @@
 
 namespace Violinist\ChangelogFetcher\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\Process;
 use Violinist\ChangelogFetcher\ChangelogRetriever;
 use Violinist\ChangelogFetcher\DependencyRepoRetriever;
 use Violinist\ProcessFactory\ProcessFactoryInterface;
 
-class ChangelogRetrieverTest extends TestCase
+class ChangelogRetrieverTest extends TestBase
 {
     public function testGetChangeLog()
     {
@@ -101,16 +100,6 @@ class ChangelogRetrieverTest extends TestCase
 ', $markdown);
     }
 
-    protected function getTestData()
-    {
-        $fake_package_data =  (object) [
-            'name' => 'psr/log',
-            'source' => (object) [
-                'url' => 'https://github.com/psr/log',
-            ]
-        ];
-        return $fake_package_data;
-    }
 
     protected function getMockRetriever($fake_package_data)
     {
