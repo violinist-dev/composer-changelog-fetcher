@@ -8,9 +8,18 @@ use function peterpostmann\uri\parse_uri;
 
 class DependencyRepoRetriever
 {
+    protected $processFactory;
+
+    protected $authToken;
+
     public function __construct(ProcessFactoryInterface $processFactory)
     {
         $this->processFactory = $processFactory;
+    }
+
+    public function setAuthToken($token)
+    {
+        $this->authToken = $token;
     }
 
     public function retrieveDependencyRepo($data)
@@ -26,7 +35,11 @@ class DependencyRepoRetriever
         if (!empty($repo_parsed)) {
             switch ($repo_parsed['_protocol']) {
                 case 'git@github.com':
-                    $repo_path = sprintf('https://%s:x-oauth-basic@github.com/%s', $this->authToken, $repo_parsed['path']);
+                    $repo_path = sprintf(
+                        'https://%s:x-oauth-basic@github.com/%s',
+                        $this->authToken,
+                        $repo_parsed['path']
+                    );
                     break;
             }
         }

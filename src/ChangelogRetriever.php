@@ -22,7 +22,7 @@ class ChangelogRetriever
     /**
      * Process factory.
      *
-     * @var ProcessFactory
+     * @var ProcessFactoryInterface
      */
     protected $processFactory;
 
