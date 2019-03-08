@@ -12,8 +12,7 @@ shared: &shared
           key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
               - ./vendor
-    - run: ./vendor/bin/phpunit
-    - run: ./vendor/bin/phpcs -p -n
+    - run: composer test
     - run: ./vendor/bin/php-coveralls -v
 
 
