@@ -5,10 +5,10 @@ shared: &shared
     - checkout
     - restore_cache:
         keys:
-            - v1-dependencies-{{ checksum "composer.json" }}-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+            - v1-dependencies-{{ checksum "composer.json" }}-{{ .Environment.CIRCLE_WORKFLOW_ID }}
     - run: composer install -n --prefer-dist
     - save_cache:
-          key: v1-dependencies-{{ checksum "composer.json" }}-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+          key: v1-dependencies-{{ checksum "composer.json" }}-{{ .Environment.CIRCLE_WORKFLOW_ID }}
           paths:
               - ./vendor
     - run: composer test
