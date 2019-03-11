@@ -65,7 +65,6 @@ class FetchCommand extends Command
                 foreach ($lines as $line) {
                     $output->writeln(sprintf("%s: %s (%s)", $line->hash, $line->message, $line->link));
                 }
-
         }
     }
 }
