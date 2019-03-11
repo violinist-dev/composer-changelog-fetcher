@@ -27,7 +27,8 @@ class FetchCommand extends Command
             new InputOption('package', 'p', InputOption::VALUE_REQUIRED),
             new InputOption('version_from', 'f', InputOption::VALUE_REQUIRED),
             new InputOption('version_to', 't', InputOption::VALUE_REQUIRED),
-            new InputOption('directory', 'd', InputOption::VALUE_OPTIONAL)
+            new InputOption('directory', 'd', InputOption::VALUE_OPTIONAL),
+            new InputOption('output', 'o', InputOption::VALUE_OPTIONAL)
         ]));
     }
 
@@ -54,6 +55,17 @@ class FetchCommand extends Command
             $input->getOption('version_from'),
             $input->getOption('version_to')
         );
-        $output->writeln($log->getAsJson());
+        switch ($input->getOption('output')) {
+            case 'json':
+                $output->writeln($log->getAsJson());
+                break;
+
+            default:
+                $lines = json_decode($log->getAsJson());
+                foreach ($lines as $line) {
+                    $output->writeln(sprintf("%s: %s (%s)", $line->hash, $line->message, $line->link));
+                }
+
+        }
     }
 }
