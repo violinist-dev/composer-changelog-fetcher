@@ -96,7 +96,7 @@ class ChangelogRetrieverTest extends TestBase
         ];
         $log = $retriever->retrieveChangelog('psr/log', $fake_lock, '1.0.0', '1.0.1');
         $markdown = $log->getAsMarkdown();
-        $this->assertEquals('- [ababab](https://github.com/psr/log/commit/ababab) Change 1
+        $this->assertEquals('- [ababab](https://github.com/psr/log/commit/ababab) `Change 1`
 ', $markdown);
     }
 
