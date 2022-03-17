@@ -37,6 +37,48 @@ class ChangelogRetriever
         $this->processFactory = $processFactory;
     }
 
+    public function retrieveChangelogAndChangedFiles($package_name, $lockdata, $version_from, $version_to)
+    {
+        $changelog = $this->retrieveChangelog($package_name, $lockdata, $version_from, $version_to);
+        $changed_files = $this->retrieveChangedFiles($package_name, $lockdata, $version_from, $version_to);
+        $changes = new ChangesData($changelog, $changed_files);
+        return $changes;
+    }
+
+    public function retrieveChangedFiles($package_name, $lockdata, $version_from, $version_to)
+    {
+        $clone_path = $this->getClonePathAndRetrieveRepo($lockdata, $package_name);
+        $files_raw_command = sprintf('git -C %s diff --name-only %s %s', $clone_path, $version_from, $version_to);
+        $process = $this->processFactory->getProcess($files_raw_command);
+        $process->run();
+        if ($process->getExitCode()) {
+            throw new \Exception('git diff process exited with wrong exit code. Exit code was: ' . $process->getExitCode());
+        }
+        $string = $process->getOutput();
+        $files = [];
+        foreach (explode("\n", $string) as $line) {
+            $line = trim($line);
+            if (empty($line)) {
+                continue;
+            }
+            $files[] = $line;
+        }
+        return $files;
+    }
+
+    protected function getClonePathAndRetrieveRepo($lockdata, $package_name)
+    {
+        $data = $this->getPackageLockData($lockdata, $package_name);
+        return $this->retrieveDependencyRepo($data);
+    }
+
+    protected function getPackageLockData($lockdata, $package_name)
+    {
+        $lock_data_obj = new ComposerLockData();
+        $lock_data_obj->setData($lockdata);
+        return $lock_data_obj->getPackageData($package_name);
+    }
+
     /**
      * @return ChangeLogData
      *
@@ -44,10 +86,8 @@ class ChangelogRetriever
      */
     public function retrieveChangelog($package_name, $lockdata, $version_from, $version_to)
     {
-        $lock_data_obj = new ComposerLockData();
-        $lock_data_obj->setData($lockdata);
-        $data = $lock_data_obj->getPackageData($package_name);
-        $clone_path = $this->retrieveDependencyRepo($data);
+        $data = $this->getPackageLockData($lockdata, $package_name);
+        $clone_path = $this->getClonePathAndRetrieveRepo($lockdata, $package_name);
         // Then try to get the changelog.
         $command = sprintf('git -C %s log %s..%s --oneline', $clone_path, $version_from, $version_to);
         $process = $this->processFactory->getProcess($command);
