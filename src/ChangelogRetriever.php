@@ -37,7 +37,7 @@ class ChangelogRetriever
         $this->processFactory = $processFactory;
     }
 
-    public function retrieveChangelogAndChangedFiles($package_name, $lockdata, $version_from, $version_to)
+    public function retrieveChangelogAndChangedFiles($package_name, $lockdata, $version_from, $version_to) : ChangesData
     {
         $changelog = $this->retrieveChangelog($package_name, $lockdata, $version_from, $version_to);
         $changed_files = $this->retrieveChangedFiles($package_name, $lockdata, $version_from, $version_to);
@@ -45,7 +45,7 @@ class ChangelogRetriever
         return $changes;
     }
 
-    public function retrieveChangedFiles($package_name, $lockdata, $version_from, $version_to)
+    public function retrieveChangedFiles($package_name, $lockdata, $version_from, $version_to) : array
     {
         $clone_path = $this->getClonePathAndRetrieveRepo($lockdata, $package_name);
         $files_raw_command = sprintf('git -C %s diff --name-only %s %s', $clone_path, $version_from, $version_to);
@@ -84,7 +84,7 @@ class ChangelogRetriever
      *
      * @throws \Exception
      */
-    public function retrieveChangelog($package_name, $lockdata, $version_from, $version_to)
+    public function retrieveChangelog($package_name, $lockdata, $version_from, $version_to) : ChangeLogData
     {
         $data = $this->getPackageLockData($lockdata, $package_name);
         $clone_path = $this->getClonePathAndRetrieveRepo($lockdata, $package_name);
