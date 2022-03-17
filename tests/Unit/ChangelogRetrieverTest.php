@@ -100,13 +100,45 @@ class ChangelogRetrieverTest extends TestBase
 ', $markdown);
     }
 
+    public function testRetrieveChangelogAndChangedFiles()
+    {
+        $fake_package_data = $this->getTestData();
+        $fake_package_data->source->url = 'git@github.com:psr/log';
+        $mock_retriever = $this->getMockRetriever($fake_package_data);
+        $mock_process1 = $this->createMock(Process::class);
+        $mock_process1->method('getOutput')
+            ->willReturn('ababab Change 1');
+        $mock_process2 = $this->createMock(Process::class);
+        $mock_process2->method('getOutput')
+            ->willReturn("File1\n\nFileOtherFile.php\n\nAnotherFileWeirdExtensionHuh.weird\n");
+        $mock_process_factory = $this->createMock(ProcessFactoryInterface::class);
+        $mock_process_factory->method('getProcess')
+            ->willReturnCallback(function ($command) use ($mock_process1, $mock_process2) {
+                if ($command === 'git -C /tmp/dummy_path log 1.0.0..1.0.1 --oneline') {
+                    return $mock_process1;
+                }
+                return $mock_process2;
+            });
+        $retriever = new ChangelogRetriever($mock_retriever, $mock_process_factory);
+        $fake_lock = (object) [
+            'packages' => [
+                $fake_package_data,
+            ],
+        ];
+        $changes = $retriever->retrieveChangelogAndChangedFiles('psr/log', $fake_lock, '1.0.0', '1.0.1');
+        self::assertEquals(['File1', 'FileOtherFile.php', 'AnotherFileWeirdExtensionHuh.weird'], $changes->getChangedFiles());
+        $log = $changes->getChangelog();
+        $markdown = $log->getAsMarkdown();
+        self::assertEquals('- [ababab](https://github.com/psr/log/commit/ababab) `Change 1`
+', $markdown);
+    }
+
 
     protected function getMockRetriever($fake_package_data)
     {
         $fake_path = '/tmp/dummy_path';
         $mock_retriever = $this->createMock(DependencyRepoRetriever::class);
-        $mock_retriever->expects($this->once())
-            ->method('retrieveDependencyRepo')
+        $mock_retriever->method('retrieveDependencyRepo')
             ->with($fake_package_data)
             ->willReturn($fake_path);
         return $mock_retriever;
