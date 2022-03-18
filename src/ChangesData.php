@@ -27,7 +27,7 @@ class ChangesData
     }
 
     /**
-     * @return mixed
+     * @return ChangeLogData
      */
     public function getChangelog() : ChangeLogData
     {
@@ -43,7 +43,7 @@ class ChangesData
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getChangedFiles() : array
     {
