@@ -2,12 +2,25 @@
 
 namespace Violinist\ChangelogFetcher;
 
+use Violinist\GitLogFormat\ChangeLogData;
+
 class ChangesData
 {
+    /**
+     * Changelog data.
+     *
+     * @var ChangeLogData
+     */
     private $changelog;
+
+    /**
+     * Changed files.
+     *
+     * @var array
+     */
     private $changedFiles;
 
-    public function __construct($changelog, $changedFiles)
+    public function __construct(ChangeLogData $changelog, array $changedFiles)
     {
         $this->changelog = $changelog;
         $this->changedFiles = $changedFiles;
@@ -16,7 +29,7 @@ class ChangesData
     /**
      * @return mixed
      */
-    public function getChangelog()
+    public function getChangelog() : ChangeLogData
     {
         return $this->changelog;
     }
@@ -24,7 +37,7 @@ class ChangesData
     /**
      * @param mixed $changelog
      */
-    public function setChangelog($changelog)
+    public function setChangelog(ChangeLogData $changelog)
     {
         $this->changelog = $changelog;
     }
@@ -32,7 +45,7 @@ class ChangesData
     /**
      * @return mixed
      */
-    public function getChangedFiles()
+    public function getChangedFiles() : array
     {
         return $this->changedFiles;
     }
