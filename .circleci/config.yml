@@ -11,7 +11,10 @@ shared: &shared
           key: v1-dependencies-{{ checksum "composer.json" }}-{{ .Environment.CIRCLE_JOB }}
           paths:
               - ./vendor
-    - run: composer test
+    - run:
+        command: composer test
+        environment:
+          XDEBUG_MODE: coverage
     - run: ./vendor/bin/php-coveralls -v
 
 
