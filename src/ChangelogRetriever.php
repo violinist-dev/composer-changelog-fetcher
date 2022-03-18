@@ -10,7 +10,6 @@ use function peterpostmann\uri\parse_uri;
 
 class ChangelogRetriever
 {
-    private $authToken;
 
     /**
      * Dependency retriever.
@@ -25,11 +24,6 @@ class ChangelogRetriever
      * @var ProcessFactoryInterface
      */
     protected $processFactory;
-
-    public function setAuthToken($token)
-    {
-        $this->authToken = $token;
-    }
 
     public function __construct(DependencyRepoRetriever $retriever, ProcessFactoryInterface $processFactory)
     {
