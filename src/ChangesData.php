@@ -35,7 +35,7 @@ class ChangesData
     }
 
     /**
-     * @param mixed $changelog
+     * @param ChangeLogData $changelog
      */
     public function setChangelog(ChangeLogData $changelog)
     {
