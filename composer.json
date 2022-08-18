@@ -29,7 +29,7 @@
     },
     "scripts": {
         "phpstan": "phpstan analyse src tests",
-        "test": "@composer lint && phpunit && @composer phpstan",
+        "test": "@composer lint && phpunit",
         "lint": "./vendor/bin/phpcs -p -n"
 
     }
