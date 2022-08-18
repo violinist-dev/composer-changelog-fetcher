@@ -28,6 +28,9 @@ class DependencyRepoRetriever
         if (!isset($data->source) || $data->source->type != 'git') {
             throw new \Exception(sprintf('Unknown source or non-git source found for %s. Aborting.', $data->name));
         }
+        if (empty($data->name)) {
+            throw new \Exception('No package name found');
+        }
         // We could have this cached in the md5 of the package name.
         $clone_path = '/tmp/' . md5($data->name);
         $repo_path = $data->source->url;
