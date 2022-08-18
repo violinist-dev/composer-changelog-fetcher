@@ -28,7 +28,8 @@
         "phpstan/phpstan-phpunit": "^0.9.4"
     },
     "scripts": {
-        "test": "@composer lint && phpunit && phpstan analyse --level=max -c phpstan.neon src tests",
+        "phpstan": "phpstan analyse src tests",
+        "test": "@composer lint && phpunit && @composer phpstan",
         "lint": "./vendor/bin/phpcs -p -n"
 
     }
