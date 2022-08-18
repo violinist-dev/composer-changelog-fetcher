@@ -1,7 +1,7 @@
 # composer-changelog-fetcher
 
 [![Violinist enabled](https://img.shields.io/badge/violinist-enabled-brightgreen.svg)](https://violinist.io)
-[![CircleCI](https://circleci.com/gh/violinist-dev/composer-changelog-fetcher.svg?style=svg)](https://circleci.com/gh/violinist-dev/composer-changelog-fetcher)
+[![Test](https://github.com/violinist-dev/composer-changelog-fetcher/actions/workflows/test.yml/badge.svg)](https://github.com/violinist-dev/composer-changelog-fetcher/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/violinist-dev/composer-changelog-fetcher/badge.svg?branch=master)](https://coveralls.io/github/violinist-dev/composer-changelog-fetcher?branch=master)
 
 ## Installation
