@@ -39,7 +39,7 @@ class RepoRetrieverTest extends TestBase
         $path = '/tmp/e9a8b66d7a4bac57a08b8f0f2664c50f';
         $mock_factory->expects($this->once())
             ->method('getProcess')
-            ->with('git clone https://github.com/psr/log ' . $path)
+            ->with(['git', 'clone', 'https://github.com/psr/log', $path])
             ->willReturn($mock_process);
         $data = $this->getTestData();
         $retriever = new DependencyRepoRetriever($mock_factory);
