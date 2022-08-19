@@ -12,6 +12,6 @@ class ProcessFactoryTest extends TestCase
     public function testFactory()
     {
         $processFactory = new ProcessFactory();
-        $this->assertEquals(Process::class, get_class($processFactory->getProcess('true')));
+        $this->assertEquals(Process::class, get_class($processFactory->getProcess(['true'])));
     }
 }
