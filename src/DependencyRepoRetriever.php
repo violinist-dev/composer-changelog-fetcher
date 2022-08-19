@@ -47,9 +47,9 @@ class DependencyRepoRetriever
             }
         }
         if (!file_exists($clone_path)) {
-            $command = sprintf('git clone %s %s', $repo_path, $clone_path);
+            $command = ['git', 'clone', $repo_path, $clone_path];
         } else {
-            $command = sprintf('git -C %s pull', $clone_path);
+            $command = ['git', '-C', $clone_path, 'pull'];
         }
         $process = $this->processFactory->getProcess($command);
         $process->run();
