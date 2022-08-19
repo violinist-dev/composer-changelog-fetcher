@@ -42,7 +42,7 @@ class ChangelogRetriever
     public function retrieveChangedFiles($package_name, $lockdata, $version_from, $version_to) : array
     {
         $clone_path = $this->getClonePathAndRetrieveRepo($lockdata, $package_name);
-        $files_raw_command = sprintf('git -C %s diff --name-only %s %s', $clone_path, $version_from, $version_to);
+        $files_raw_command = ['git', '-C', $clone_path, 'diff', '--name-only', $version_from, $version_to];
         $process = $this->processFactory->getProcess($files_raw_command);
         $process->run();
         if ($process->getExitCode()) {
@@ -83,7 +83,7 @@ class ChangelogRetriever
         $data = $this->getPackageLockData($lockdata, $package_name);
         $clone_path = $this->getClonePathAndRetrieveRepo($lockdata, $package_name);
         // Then try to get the changelog.
-        $command = sprintf('git -C %s log %s..%s --oneline', $clone_path, $version_from, $version_to);
+        $command = ['git', '-C', $clone_path, 'log', sprintf('%s..%s', $version_from, $version_to), '--oneline'];
         $process = $this->processFactory->getProcess($command);
         $process->run();
         if ($process->getExitCode()) {
