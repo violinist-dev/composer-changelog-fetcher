@@ -20,7 +20,7 @@ class ChangelogRetrieverTest extends TestBase
             ->willReturn("ababab Change 1\nfefefe Change 2");
         $mock_process_factory = $this->createMock(ProcessFactoryInterface::class);
         $mock_process_factory->method('getProcess')
-            ->with('git -C /tmp/dummy_path log 1.0.0..1.0.1 --oneline')
+            ->with(['git', '-C', '/tmp/dummy_path', 'log', '1.0.0..1.0.1', '--oneline'])
             ->willReturn($mock_process);
         $retriever = new ChangelogRetriever($mock_retriever, $mock_process_factory);
         $fake_lock = (object) [
@@ -41,7 +41,7 @@ class ChangelogRetrieverTest extends TestBase
             ->willReturn(1);
         $mock_process_factory = $this->createMock(ProcessFactoryInterface::class);
         $mock_process_factory->method('getProcess')
-            ->with('git -C /tmp/dummy_path log 1.0.0..1.0.1 --oneline')
+            ->with(['git', '-C', '/tmp/dummy_path', 'log', '1.0.0..1.0.1', '--oneline'])
             ->willReturn($mock_process);
         $retriever = new ChangelogRetriever($mock_retriever, $mock_process_factory);
         $fake_lock = (object) [
