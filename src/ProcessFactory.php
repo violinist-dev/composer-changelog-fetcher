@@ -15,7 +15,7 @@ class ProcessFactory implements ProcessFactoryInterface
      *
      * @return \Symfony\Component\Process\Process
      */
-    public function getProcess($commandline, $cwd = null, array $env = null, $input = null, $timeout = 60, array $options = null)
+    public function getProcess(array $commandline, $cwd = null, array $env = null, $input = null, $timeout = 60, array $options = null)
     {
         $process_class = Process::class;
         return new $process_class($commandline, $cwd, $env, $input, $timeout);
