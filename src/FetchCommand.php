@@ -38,7 +38,7 @@ class FetchCommand extends Command
      * @return int|null|void
      * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output) : int
     {
         if (!$input->getOption('package') || !$input->getOption('version_from') || !$input->getOption('version_to')) {
             throw new \InvalidArgumentException('Please supply options for package, version_from and version_to');
@@ -66,5 +66,6 @@ class FetchCommand extends Command
                     $output->writeln(sprintf("%s: %s (%s)", $line->hash, $line->message, $line->link));
                 }
         }
+        return 0;
     }
 }
