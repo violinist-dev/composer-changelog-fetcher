@@ -13,7 +13,7 @@
       "changelog-fetcher"
     ],
     "require": {
-        "symfony/console": "^3.4||^4",
+        "symfony/console": "^3.4||^4||^5.4",
         "violinist-dev/process-factory": "^2.0",
         "symfony/dependency-injection": "^3.4||^4",
         "violinist-dev/composer-lock-data": "^1.1",
