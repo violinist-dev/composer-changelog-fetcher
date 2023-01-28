@@ -2,6 +2,7 @@
 
 namespace Violinist\ChangelogFetcher;
 
+use Symfony\Component\Process\Process;
 use Violinist\ComposerLockData\ComposerLockData;
 use Violinist\GitLogFormat\ChangeLogData;
 use Violinist\ProcessFactory\ProcessFactoryInterface;
@@ -29,6 +30,35 @@ class ChangelogRetriever
     {
         $this->retriever = $retriever;
         $this->processFactory = $processFactory;
+    }
+
+    public function retrieveTagsBetweenShas($lockdata, $package_name, $sha1, $sha2) : array
+    {
+        $clone_path = $this->getClonePathAndRetrieveRepo($lockdata, $package_name);
+        $command = [
+            'git',
+            '-C',
+            $clone_path,
+            'log',
+            sprintf('%s...%s', $sha1, $sha2),
+            '--decorate', '--simplify-by-decoration',
+            '|',
+            'grep',
+            '-o',
+            "'tag: [^,)]\+'",
+            '|',
+            'sed',
+            "'s/^tag: //'",
+        ];
+        $process = Process::fromShellCommandline("git -C $clone_path log $sha1...$sha2 --decorate --simplify-by-decoration | grep -o 'tag: [^,)]\+' | sed 's/^tag: //'");
+        $process->run();
+        if ($process->getExitCode()) {
+            throw new \Exception('No tags found for the range');
+        }
+
+        $output = $process->getOutput();
+        return array_filter(explode("\n", $output));
+
     }
 
     public function retrieveChangelogAndChangedFiles($package_name, $lockdata, $version_from, $version_to) : ChangesData
