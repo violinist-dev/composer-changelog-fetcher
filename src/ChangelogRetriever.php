@@ -58,7 +58,6 @@ class ChangelogRetriever
 
         $output = $process->getOutput();
         return array_filter(explode("\n", $output));
-
     }
 
     public function retrieveChangelogAndChangedFiles($package_name, $lockdata, $version_from, $version_to) : ChangesData
