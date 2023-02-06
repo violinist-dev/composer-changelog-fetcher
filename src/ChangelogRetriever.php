@@ -2,6 +2,7 @@
 
 namespace Violinist\ChangelogFetcher;
 
+use Symfony\Component\Process\Process;
 use Violinist\ComposerLockData\ComposerLockData;
 use Violinist\GitLogFormat\ChangeLogData;
 use Violinist\ProcessFactory\ProcessFactoryInterface;
@@ -29,6 +30,51 @@ class ChangelogRetriever
     {
         $this->retriever = $retriever;
         $this->processFactory = $processFactory;
+    }
+
+    public function retrieveTagsBetweenShas($lockdata, $package_name, $sha1, $sha2) : array
+    {
+        $clone_path = $this->getClonePathAndRetrieveRepo($lockdata, $package_name);
+        $command = [
+            'git',
+            '-C',
+            $clone_path,
+            'log',
+            sprintf('%s...%s', $sha1, $sha2),
+            '--decorate', '--simplify-by-decoration',
+        ];
+        $process = $this->processFactory->getProcess($command);
+        $process->run();
+        if ($process->getExitCode()) {
+            throw new \Exception('No tags found for the range');
+        }
+
+        $output = $process->getOutput();
+        // OK, so filter all lines that contain something like "tag: v1.2.3". Or
+        // mimick what would be a pipe to grep like this:
+        // | grep -o 'tag: [^,)]\+'
+        $useful_array = array_values(array_filter(explode("\n", $output), function ($line) {
+            return preg_match('/tag: [^,)]/', $line);
+        }));
+        // Now we have the lines, now we just need to filter out the tag parts
+        // of it. This mimics doing some pipe to sed thing we used to have.
+        $actual_tags = array_map(function ($line) {
+            // At this point, the string will either look something like this:
+            // commit 5f0f17732e88efcd15d2554d4d4c2df4e380e65f (tag: v3.3.1, origin/3.3)
+            // or like this:
+            // commit e26ee41a73d1ae3adbd3c06eaf039ac3c1dfcc57 (tag: 3.3.0)
+            // or variations of that.
+            $tag_line_matches = [];
+            preg_match('/tag: .*[,)]/', $line, $tag_line_matches);
+            // Now, remove the string "tag: "
+            if (empty($tag_line_matches[0])) {
+                return null;
+            }
+            $without_tag = str_replace('tag: ', '', $tag_line_matches[0]);
+            $only_actual_tag = preg_replace('/\)?|,.*/', '', $without_tag);
+            return $only_actual_tag;
+        }, $useful_array);
+        return array_filter($actual_tags);
     }
 
     public function retrieveChangelogAndChangedFiles($package_name, $lockdata, $version_from, $version_to) : ChangesData

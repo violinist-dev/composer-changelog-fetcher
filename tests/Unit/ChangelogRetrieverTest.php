@@ -133,6 +133,25 @@ class ChangelogRetrieverTest extends TestBase
 ', $markdown);
     }
 
+    public function testRetrieveTags()
+    {
+        $fake_package_data = $this->getTestData();
+        $mock_retriever = $this->getMockRetriever($fake_package_data);
+        $mock_process = $this->createMock(Process::class);
+        $mock_process->method('getOutput')
+          ->willReturn(file_get_contents(__DIR__ . '/../assets/psrlog-example.txt'));
+        $mock_process_factory = $this->createMock(ProcessFactoryInterface::class);
+        $mock_process_factory->method('getProcess')
+          ->willReturn($mock_process);
+        $retriever = new ChangelogRetriever($mock_retriever, $mock_process_factory);
+        $fake_lock = (object) [
+          'packages' => [
+            $fake_package_data,
+          ],
+        ];
+        $tags = $retriever->retrieveTagsBetweenShas($fake_lock, 'psr/log', 'd49695b909c3b7628b6289db5479a1c204601f11', 'bf73deb2b3b896a9d9c75f3f0d88185d2faa27e2');
+        self::assertEquals(['1.1.4', '1.1.3', '1.1.2'], $tags);
+    }
 
     protected function getMockRetriever($fake_package_data)
     {

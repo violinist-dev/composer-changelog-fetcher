@@ -1,0 +1,21 @@
+commit d49695b909c3b7628b6289db5479a1c204601f11 (tag: 1.1.4)
+Author: Jordi Boggiano <j.boggiano@seld.be>
+Date:   Mon May 3 13:20:27 2021 +0200
+
+    Merge pull request #74 from Jeckerson/master
+
+    Clarify type of 2nd argument `context`
+
+commit 0f73288fd15629204f9d42b7055f72dacbe811fc (tag: 1.1.3)
+Author: Jordi Boggiano <j.boggiano@seld.be>
+Date:   Mon Mar 23 10:12:05 2020 +0100
+
+    Merge pull request #70 from greg0ire/better-typehints
+
+    Be explicit about mixed context elements
+
+commit 446d54b4cb6bf489fc9d75f55843658e6f25d801 (tag: 1.1.2)
+Author: sebastianstucke87 <47354551+sebastianstucke87@users.noreply.github.com>
+Date:   Fri Nov 1 12:05:21 2019 +0100
+
+    Add "exception"-context array key to docs
