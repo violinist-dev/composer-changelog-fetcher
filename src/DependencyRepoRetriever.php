@@ -61,7 +61,7 @@ class DependencyRepoRetriever
 
                     case 'www.bitbucket.org':
                     case 'bitbucket.org':
-                    $repo_path = sprintf('https://x-token-auth:%s@bitbucket.org/%s', $this->authToken, $repo_parsed["path"]);
+                        $repo_path = sprintf('https://x-token-auth:%s@bitbucket.org/%s', $this->authToken, $repo_parsed["path"]);
                         break;
 
                     default:
