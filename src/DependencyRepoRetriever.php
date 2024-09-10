@@ -47,7 +47,7 @@ class DependencyRepoRetriever
                     $repo_path_overridden = true;
                     break;
             }
-            if (!$repo_path_overridden) {
+            if (!$repo_path_overridden && $this->authToken) {
                 switch ($repo_parsed["host"]) {
                     case 'www.github.com':
                     case 'github.com':
