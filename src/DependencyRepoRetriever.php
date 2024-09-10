@@ -40,7 +40,7 @@ class DependencyRepoRetriever
             switch ($repo_parsed['_protocol']) {
                 case 'git@github.com':
                     $repo_path = sprintf(
-                        'https://%s:x-oauth-basic@github.com/%s',
+                        'https://x-access-token:%s@github.com/%s',
                         $this->authToken,
                         $repo_parsed['path']
                     );
