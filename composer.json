@@ -13,9 +13,9 @@
       "changelog-fetcher"
     ],
     "require": {
-        "symfony/console": "^3.4||^4||^5.4",
+        "symfony/console": "^5.0 || ^6.0 || ^7.0",
         "violinist-dev/process-factory": "^3.0",
-        "symfony/dependency-injection": "^3.4||^4",
+        "symfony/dependency-injection": "^5.0 || ^6.0 || ^7.0",
         "violinist-dev/composer-lock-data": "^1.1",
         "peterpostmann/parse_uri": "^1.0",
         "violinist-dev/git-log-format": "^1.1.2"
