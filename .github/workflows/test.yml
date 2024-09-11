@@ -18,6 +18,23 @@ jobs:
           - "8.2"
           - "8.3"
           - "8.4"
+        symfony-version:
+          - "5"
+          - "6"
+          - "7"
+        exclude:
+          - php-version: 7.3
+            symfony-version: 7
+          - php-version: 7.4
+            symfony-version: 7
+          - php-version: 8.0
+            symfony-version: 7
+          - php-version: 8.1
+            symfony-version: 7
+          - php-version: 7.3
+            symfony-version: 6
+          - php-version: 7.4
+            symfony-version: 6
     steps:
       - name: Dump matrix context
         env:
@@ -39,15 +56,16 @@ jobs:
         run: composer --verbose validate
 
       - name: Install dependencies
-        run: composer --verbose install
+        run: |
+          composer require symfony/console:^${{ matrix.symfony-version }}.0 symfony/dependency-injection:^${{ matrix.symfony-version }}.0 symfony/process:^${{ matrix.symfony-version }}.0
+          git checkout .
+          composer update not-installed/here
 
       - name: Run phpstan
         run: composer phpstan
 
       - name: Run tests
         run: composer test
-        env:
-          COMPOSER_VERSION: ${{ matrix.composer }}
 
       - name: Coveralls
         if: matrix.php-version == 7.4
