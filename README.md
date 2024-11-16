@@ -3,6 +3,9 @@
 [![Violinist enabled](https://img.shields.io/badge/violinist-enabled-brightgreen.svg)](https://violinist.io)
 [![Test](https://github.com/violinist-dev/composer-changelog-fetcher/actions/workflows/test.yml/badge.svg)](https://github.com/violinist-dev/composer-changelog-fetcher/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/violinist-dev/composer-changelog-fetcher/badge.svg?branch=master)](https://coveralls.io/github/violinist-dev/composer-changelog-fetcher?branch=master)
+[![Packagist](https://img.shields.io/packagist/v/violinist-dev/composer-changelog-fetcher.svg?maxAge=3600)](https://packagist.org/packages/violinist-dev/composer-changelog-fetcher)
+[![Packagist](https://img.shields.io/packagist/dt/violinist-dev/composer-changelog-fetcher.svg?maxAge=3600)](https://packagist.org/packages/violinist-dev/composer-changelog-fetcher)
+
 
 ## Installation
 
