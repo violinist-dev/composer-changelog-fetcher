@@ -59,7 +59,7 @@ class RepoRetrieverTest extends TestBase
                     'source' => (object) [
                         'type' => 'git',
                         'url' => 'https://github.com/psr/log',
-                    ]
+                    ],
                 ],
             ],
             [
@@ -70,7 +70,7 @@ class RepoRetrieverTest extends TestBase
                     'source' => (object) [
                         'type' => 'git',
                         'url' => 'git@github.com:user/private',
-                    ]
+                    ],
                 ],
             ],
             [
@@ -81,7 +81,7 @@ class RepoRetrieverTest extends TestBase
                     'source' => (object) [
                         'type' => 'git',
                         'url' => 'git@bitbucket.org:user/private',
-                    ]
+                    ],
                 ],
             ],
         ];

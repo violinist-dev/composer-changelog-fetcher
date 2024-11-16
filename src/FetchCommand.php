@@ -28,7 +28,7 @@ class FetchCommand extends Command
             new InputOption('version_from', 'f', InputOption::VALUE_REQUIRED),
             new InputOption('version_to', 't', InputOption::VALUE_REQUIRED),
             new InputOption('directory', 'd', InputOption::VALUE_OPTIONAL),
-            new InputOption('output', 'o', InputOption::VALUE_OPTIONAL)
+            new InputOption('output', 'o', InputOption::VALUE_OPTIONAL),
         ]));
     }
 
