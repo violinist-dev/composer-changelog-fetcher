@@ -13,7 +13,7 @@ abstract class TestBase extends TestCase
             'source' => (object) [
                 'type' => 'git',
                 'url' => 'https://github.com/psr/log',
-            ]
+            ],
         ];
         return $fake_package_data;
     }

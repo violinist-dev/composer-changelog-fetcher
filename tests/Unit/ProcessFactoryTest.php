@@ -2,7 +2,6 @@
 
 namespace Violinist\ChangelogFetcher\Tests\Unit;
 
-use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\Process;
 use Violinist\ChangelogFetcher\ProcessFactory;

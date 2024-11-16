@@ -2,7 +2,6 @@
 
 namespace Violinist\ChangelogFetcher;
 
-use Symfony\Component\Process\Process;
 use Violinist\ComposerLockData\ComposerLockData;
 use Violinist\GitLogFormat\ChangeLogData;
 use Violinist\ProcessFactory\ProcessFactoryInterface;
