@@ -44,6 +44,17 @@ class DependencyRepoRetriever
                         $repo_parsed['path']
                     );
                     break;
+
+                case 'git@bitbucket.org':
+                    $repo_path = sprintf('https://x-token-auth:%s@bitbucket.org/%s', $this->authToken, $repo_parsed['path']);
+                    if (strlen($this->authToken) < 50 && strpos($this->authToken, ':') !== false) {
+                        $repo_path = sprintf(
+                            'https://%s@bitbucket.org/%s',
+                            $this->authToken,
+                            $repo_parsed['path']
+                        );
+                    }
+                    break;
             }
         }
         if (!file_exists($clone_path)) {
