@@ -26,12 +26,18 @@
         "php-coveralls/php-coveralls": "^2.1",
         "squizlabs/php_codesniffer": "^3.4",
         "phpstan/phpstan": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0"
+        "phpstan/phpstan-phpunit": "^1.0",
+        "slevomat/coding-standard": "^8.15"
     },
     "scripts": {
         "phpstan": "phpstan analyse src tests",
         "test": "@composer lint && phpunit",
         "lint": "./vendor/bin/phpcs -p -n"
 
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
