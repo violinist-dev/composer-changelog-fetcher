@@ -119,6 +119,28 @@ class RepoRetrieverTest extends TestBase
                     ],
                 ],
             ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://oauth2:dummy@gitlab.com/user/private',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://gitlab.com/user/private',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://oauth2:dummy@gitlab.com/user/private',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://www.gitlab.com/user/private',
+                    ],
+                ],
+            ],
         ];
     }
 }

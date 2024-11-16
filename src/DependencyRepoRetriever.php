@@ -48,7 +48,7 @@ class DependencyRepoRetriever
                 switch ($repo_parsed["host"]) {
                     case 'www.gitlab.com':
                     case 'gitlab.com':
-                        $repo_path = sprintf('https://oauth2:%s@gitlab.com/%s', $this->authToken, $repo_parsed["path"]);
+                        $repo_path = sprintf('https://oauth2:%s@gitlab.com%s', $this->authToken, $repo_parsed["path"]);
                         break;
 
                     case 'www.bitbucket.org':
