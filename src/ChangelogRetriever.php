@@ -2,7 +2,6 @@
 
 namespace Violinist\ChangelogFetcher;
 
-use Symfony\Component\Process\Process;
 use Violinist\ComposerLockData\ComposerLockData;
 use Violinist\GitLogFormat\ChangeLogData;
 use Violinist\ProcessFactory\ProcessFactoryInterface;
@@ -148,6 +147,10 @@ class ChangelogRetriever
             switch ($repo_parsed['_protocol']) {
                 case 'git@github.com':
                     $git_url = sprintf('https://github.com/%s', $repo_parsed['path']);
+                    break;
+
+                case 'git@bitbucket.org':
+                    $git_url = sprintf('https://bitbucket.org/%s', $repo_parsed['path']);
                     break;
             }
         }

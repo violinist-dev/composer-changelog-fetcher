@@ -4,7 +4,7 @@ namespace Violinist\ChangelogFetcher;
 
 use Violinist\ProcessFactory\ProcessFactoryInterface;
 
-use function peterpostmann\uri\parse_uri;
+use Violinist\RepoAndTokenToCloneUrl\ToCloneUrl;
 
 class DependencyRepoRetriever
 {
@@ -34,6 +34,9 @@ class DependencyRepoRetriever
         // We could have this cached in the md5 of the package name.
         $clone_path = '/tmp/' . md5($data->name);
         $repo_path = $data->source->url;
+        if (!empty($this->authToken)) {
+            $repo_path = ToCloneUrl::fromRepoAndToken($repo_path, $this->authToken);
+        }
         $repo_parsed = parse_uri($repo_path);
         $repo_path_overridden = false;
         if (!empty($repo_parsed)) {
