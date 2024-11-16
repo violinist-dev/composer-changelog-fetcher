@@ -46,11 +46,6 @@ class DependencyRepoRetriever
         if (!empty($repo_parsed)) {
             if (!$repo_path_overridden && $this->authToken) {
                 switch ($repo_parsed["host"]) {
-                    case 'www.gitlab.com':
-                    case 'gitlab.com':
-                        $repo_path = sprintf('https://oauth2:%s@gitlab.com%s', $this->authToken, $repo_parsed["path"]);
-                        break;
-
                     case 'www.bitbucket.org':
                     case 'bitbucket.org':
                         $repo_path = sprintf('https://x-token-auth:%s@bitbucket.org%s', $this->authToken, $repo_parsed["path"]);
