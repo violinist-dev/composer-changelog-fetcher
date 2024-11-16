@@ -4,6 +4,7 @@ namespace Violinist\ChangelogFetcher;
 
 use Violinist\ProcessFactory\ProcessFactoryInterface;
 
+use Violinist\RepoAndTokenToCloneUrl\ToCloneUrl;
 use function peterpostmann\uri\parse_uri;
 
 class DependencyRepoRetriever
@@ -34,28 +35,8 @@ class DependencyRepoRetriever
         // We could have this cached in the md5 of the package name.
         $clone_path = '/tmp/' . md5($data->name);
         $repo_path = $data->source->url;
-        $repo_parsed = parse_uri($repo_path);
-        if (!empty($repo_parsed)) {
-            switch ($repo_parsed['_protocol']) {
-                case 'git@github.com':
-                    $repo_path = sprintf(
-                        'https://x-access-token:%s@github.com/%s',
-                        $this->authToken,
-                        $repo_parsed['path']
-                    );
-                    break;
-
-                case 'git@bitbucket.org':
-                    $repo_path = sprintf('https://x-token-auth:%s@bitbucket.org/%s', $this->authToken, $repo_parsed['path']);
-                    if (strlen($this->authToken) < 50 && strpos($this->authToken, ':') !== false) {
-                        $repo_path = sprintf(
-                            'https://%s@bitbucket.org/%s',
-                            $this->authToken,
-                            $repo_parsed['path']
-                        );
-                    }
-                    break;
-            }
+        if (!empty($this->authToken)) {
+            $repo_path = ToCloneUrl::fromRepoAndToken($repo_path, $this->authToken);
         }
         if (!file_exists($clone_path)) {
             $command = ['git', 'clone', $repo_path, $clone_path];

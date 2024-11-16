@@ -18,7 +18,8 @@
         "symfony/dependency-injection": "^5.0 || ^6.0 || ^7.0",
         "violinist-dev/composer-lock-data": "^1.1",
         "peterpostmann/parse_uri": "^1.0",
-        "violinist-dev/git-log-format": "^1.1.2"
+        "violinist-dev/git-log-format": "^1.1.2",
+        "violinist-dev/repo-and-token-to-clone-url": "dev-main"
     },
     "require-dev": {
         "phpunit/phpunit": "^7 || ^8 || ^9",
