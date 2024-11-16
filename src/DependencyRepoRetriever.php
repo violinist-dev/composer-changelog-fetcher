@@ -35,19 +35,17 @@ class DependencyRepoRetriever
         // We could have this cached in the md5 of the package name.
         $clone_path = '/tmp/' . md5($data->name);
         $repo_path = $data->source->url;
+        $repo_path_overridden = false;
         if (!empty($this->authToken)) {
             $repo_path = ToCloneUrl::fromRepoAndToken($repo_path, $this->authToken);
+            if ($repo_path !== $data->source->url) {
+                $repo_path_overridden = true;
+            }
         }
         $repo_parsed = parse_uri($repo_path);
-        $repo_path_overridden = false;
         if (!empty($repo_parsed)) {
             if (!$repo_path_overridden && $this->authToken) {
                 switch ($repo_parsed["host"]) {
-                    case 'www.github.com':
-                    case 'github.com':
-                        $repo_path = sprintf('https://x-access-token:%s@github.com%s', $this->authToken, $repo_parsed["path"]);
-                        break;
-
                     case 'www.gitlab.com':
                     case 'gitlab.com':
                         $repo_path = sprintf('https://oauth2:%s@gitlab.com/%s', $this->authToken, $repo_parsed["path"]);

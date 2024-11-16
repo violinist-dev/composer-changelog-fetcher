@@ -35,7 +35,7 @@ class RepoRetrieverTest extends TestBase
     /**
      * @dataProvider providerTestClone
      */
-    public function testClone(string $expected_path, string $repo_path, $data)
+    public function testClone(string $expected_path, string $repo_path, $data, $token = 'dummy')
     {
         $mock_process = $this->createMock(Process::class);
         $mock_factory = $this->createMock(ProcessFactoryInterface::class);
@@ -44,7 +44,7 @@ class RepoRetrieverTest extends TestBase
             ->with(['git', 'clone', $repo_path, $expected_path])
             ->willReturn($mock_process);
         $retriever = new DependencyRepoRetriever($mock_factory);
-        $retriever->setAuthToken('dummy');
+        $retriever->setAuthToken($token);
         $this->assertEquals($expected_path, $retriever->retrieveDependencyRepo($data));
     }
 
@@ -53,12 +53,47 @@ class RepoRetrieverTest extends TestBase
         return [
             [
                 '/tmp/e9a8b66d7a4bac57a08b8f0f2664c50f',
+                'https://github.com/psr/log',
+                (object) [
+                    'name' => 'psr/log',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://github.com/psr/log',
+                    ],
+                ],
+                null,
+            ],
+            [
+                '/tmp/e9a8b66d7a4bac57a08b8f0f2664c50f',
                 'https://x-access-token:dummy@github.com/psr/log',
                 (object) [
                     'name' => 'psr/log',
                     'source' => (object) [
                         'type' => 'git',
                         'url' => 'https://github.com/psr/log',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/e9a8b66d7a4bac57a08b8f0f2664c50f',
+                'https://www.github.com/psr/log',
+                (object) [
+                    'name' => 'psr/log',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://www.github.com/psr/log',
+                    ],
+                ],
+                null,
+            ],
+            [
+                '/tmp/e9a8b66d7a4bac57a08b8f0f2664c50f',
+                'https://x-access-token:dummy@github.com/psr/log',
+                (object) [
+                    'name' => 'psr/log',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://www.github.com/psr/log',
                     ],
                 ],
             ],
