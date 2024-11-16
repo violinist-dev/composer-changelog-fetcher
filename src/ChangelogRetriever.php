@@ -149,6 +149,10 @@ class ChangelogRetriever
                 case 'git@github.com':
                     $git_url = sprintf('https://github.com/%s', $repo_parsed['path']);
                     break;
+
+                case 'git@bitbucket.org':
+                    $git_url = sprintf('https://bitbucket.org/%s', $repo_parsed['path']);
+                    break;
             }
         }
         $log->setGitSource($git_url);
