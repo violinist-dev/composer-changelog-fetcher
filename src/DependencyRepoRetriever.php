@@ -51,7 +51,7 @@ class DependencyRepoRetriever
                 switch ($repo_parsed["host"]) {
                     case 'www.github.com':
                     case 'github.com':
-                        $repo_path = sprintf('https://%s:x-oauth-basic@github.com/%s', $this->authToken, $repo_parsed["path"]);
+                        $repo_path = sprintf('https://x-access-token:%s@github.com/%s', $this->authToken, $repo_parsed["path"]);
                         break;
 
                     case 'www.gitlab.com':
@@ -62,6 +62,13 @@ class DependencyRepoRetriever
                     case 'www.bitbucket.org':
                     case 'bitbucket.org':
                         $repo_path = sprintf('https://x-token-auth:%s@bitbucket.org/%s', $this->authToken, $repo_parsed["path"]);
+                        if (strlen($this->authToken) < 50 && strpos($this->authToken, ':') !== false) {
+                            $repo_path = sprintf(
+                                'https://%s@bitbucket.org/%s',
+                                $this->authToken,
+                                $repo_parsed['path']
+                            );
+                        }
                         break;
 
                     default:
