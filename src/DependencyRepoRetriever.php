@@ -5,6 +5,7 @@ namespace Violinist\ChangelogFetcher;
 use Violinist\ProcessFactory\ProcessFactoryInterface;
 
 use Violinist\RepoAndTokenToCloneUrl\ToCloneUrl;
+use function peterpostmann\uri\parse_uri;
 
 class DependencyRepoRetriever
 {
@@ -40,21 +41,11 @@ class DependencyRepoRetriever
         $repo_parsed = parse_uri($repo_path);
         $repo_path_overridden = false;
         if (!empty($repo_parsed)) {
-            switch ($repo_parsed['_protocol']) {
-                case 'git@github.com':
-                    $repo_path = sprintf(
-                        'https://x-access-token:%s@github.com/%s',
-                        $this->authToken,
-                        $repo_parsed['path']
-                    );
-                    $repo_path_overridden = true;
-                    break;
-            }
             if (!$repo_path_overridden && $this->authToken) {
                 switch ($repo_parsed["host"]) {
                     case 'www.github.com':
                     case 'github.com':
-                        $repo_path = sprintf('https://x-access-token:%s@github.com/%s', $this->authToken, $repo_parsed["path"]);
+                        $repo_path = sprintf('https://x-access-token:%s@github.com%s', $this->authToken, $repo_parsed["path"]);
                         break;
 
                     case 'www.gitlab.com':
@@ -64,7 +55,7 @@ class DependencyRepoRetriever
 
                     case 'www.bitbucket.org':
                     case 'bitbucket.org':
-                        $repo_path = sprintf('https://x-token-auth:%s@bitbucket.org/%s', $this->authToken, $repo_parsed["path"]);
+                        $repo_path = sprintf('https://x-token-auth:%s@bitbucket.org%s', $this->authToken, $repo_parsed["path"]);
                         if (strlen($this->authToken) < 50 && strpos($this->authToken, ':') !== false) {
                             $repo_path = sprintf(
                                 'https://%s@bitbucket.org/%s',

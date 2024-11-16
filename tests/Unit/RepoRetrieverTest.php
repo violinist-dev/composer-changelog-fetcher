@@ -53,7 +53,7 @@ class RepoRetrieverTest extends TestBase
         return [
             [
                 '/tmp/e9a8b66d7a4bac57a08b8f0f2664c50f',
-                'https://github.com/psr/log',
+                'https://x-access-token:dummy@github.com/psr/log',
                 (object) [
                     'name' => 'psr/log',
                     'source' => (object) [
