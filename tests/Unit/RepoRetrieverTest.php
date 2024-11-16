@@ -32,17 +32,58 @@ class RepoRetrieverTest extends TestBase
         $retriever->retrieveDependencyRepo($data);
     }
 
-    public function testClone()
+    /**
+     * @dataProvider providerTestClone
+     */
+    public function testClone(string $expected_path, string $repo_path, $data)
     {
         $mock_process = $this->createMock(Process::class);
         $mock_factory = $this->createMock(ProcessFactoryInterface::class);
-        $path = '/tmp/e9a8b66d7a4bac57a08b8f0f2664c50f';
         $mock_factory->expects($this->once())
             ->method('getProcess')
-            ->with(['git', 'clone', 'https://github.com/psr/log', $path])
+            ->with(['git', 'clone', $repo_path, $expected_path])
             ->willReturn($mock_process);
-        $data = $this->getTestData();
         $retriever = new DependencyRepoRetriever($mock_factory);
-        $this->assertEquals($path, $retriever->retrieveDependencyRepo($data));
+        $retriever->setAuthToken('dummy');
+        $this->assertEquals($expected_path, $retriever->retrieveDependencyRepo($data));
+    }
+
+    public static function providerTestClone() : array
+    {
+        return [
+            [
+                '/tmp/e9a8b66d7a4bac57a08b8f0f2664c50f',
+                'https://github.com/psr/log',
+                (object) [
+                    'name' => 'psr/log',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://github.com/psr/log',
+                    ]
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://x-access-token:dummy@github.com/user/private',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'git@github.com:user/private',
+                    ]
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://x-token-auth:dummy@bitbucket.org/user/private',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'git@bitbucket.org:user/private',
+                    ]
+                ],
+            ],
+        ];
     }
 }
