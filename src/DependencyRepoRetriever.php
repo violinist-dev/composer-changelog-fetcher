@@ -46,7 +46,6 @@ class DependencyRepoRetriever
         if (!empty($repo_parsed)) {
             if (!$repo_path_overridden && $this->authToken) {
                 switch ($repo_parsed["host"]) {
-
                     default:
                         $port = 443;
                         if ($repo_parsed['scheme'] === 'http') {
