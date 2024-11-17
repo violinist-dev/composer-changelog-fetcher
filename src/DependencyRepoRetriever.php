@@ -46,17 +46,6 @@ class DependencyRepoRetriever
         if (!empty($repo_parsed)) {
             if (!$repo_path_overridden && $this->authToken) {
                 switch ($repo_parsed["host"]) {
-                    case 'www.bitbucket.org':
-                    case 'bitbucket.org':
-                        $repo_path = sprintf('https://x-token-auth:%s@bitbucket.org%s', $this->authToken, $repo_parsed["path"]);
-                        if (strlen($this->authToken) < 50 && strpos($this->authToken, ':') !== false) {
-                            $repo_path = sprintf(
-                                'https://%s@bitbucket.org%s',
-                                $this->authToken,
-                                $repo_parsed['path']
-                            );
-                        }
-                        break;
 
                     default:
                         $port = 443;
