@@ -35,29 +35,8 @@ class DependencyRepoRetriever
         // We could have this cached in the md5 of the package name.
         $clone_path = '/tmp/' . md5($data->name);
         $repo_path = $data->source->url;
-        $repo_path_overridden = false;
         if (!empty($this->authToken)) {
             $repo_path = ToCloneUrl::fromRepoAndToken($repo_path, $this->authToken);
-            if ($repo_path !== $data->source->url) {
-                $repo_path_overridden = true;
-            }
-        }
-        $repo_parsed = parse_uri($repo_path);
-        if (!empty($repo_parsed)) {
-            if (!$repo_path_overridden && $this->authToken) {
-                switch ($repo_parsed["host"]) {
-                    default:
-                        $port = 443;
-                        if ($repo_parsed['scheme'] === 'http') {
-                            $port = 80;
-                        }
-                        if (!empty($repo_parsed["port"])) {
-                            $port = $repo_parsed["port"];
-                        }
-                        $repo_path = sprintf('%s://oauth2:%s@%s:%d%s', $repo_parsed["scheme"], $this->authToken, $repo_parsed["host"], $port, $repo_parsed["path"]);
-                        break;
-                }
-            }
         }
         if (!file_exists($clone_path)) {
             $command = ['git', 'clone', $repo_path, $clone_path];
