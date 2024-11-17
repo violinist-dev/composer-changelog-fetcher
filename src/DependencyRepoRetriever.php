@@ -5,7 +5,6 @@ namespace Violinist\ChangelogFetcher;
 use Violinist\ProcessFactory\ProcessFactoryInterface;
 
 use Violinist\RepoAndTokenToCloneUrl\ToCloneUrl;
-use function peterpostmann\uri\parse_uri;
 
 class DependencyRepoRetriever
 {
