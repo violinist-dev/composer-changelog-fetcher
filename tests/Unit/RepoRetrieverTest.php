@@ -175,6 +175,50 @@ class RepoRetrieverTest extends TestBase
                 ],
                 'user:token',
             ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://oauth2:dummy@gitlab.acme.com:443/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://gitlab.acme.com/user2/private2',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'http://oauth2:dummy@gitlab.acme.com:80/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'http://gitlab.acme.com/user2/private2',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'http://oauth2:dummy@gitlab.acme.com:9982/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'http://gitlab.acme.com:9982/user2/private2',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://oauth2:dummy@gitlab.acme.com:2235/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://gitlab.acme.com:2235/user2/private2',
+                    ],
+                ],
+            ],
         ];
     }
 }

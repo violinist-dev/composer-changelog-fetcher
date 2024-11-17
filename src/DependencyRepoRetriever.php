@@ -54,7 +54,7 @@ class DependencyRepoRetriever
                         if (!empty($repo_parsed["port"])) {
                             $port = $repo_parsed["port"];
                         }
-                        $repo_path = sprintf('%s://oauth2:%s@%s:%d/%s', $repo_parsed["scheme"], $this->authToken, $repo_parsed["host"], $port, $repo_parsed["path"]);
+                        $repo_path = sprintf('%s://oauth2:%s@%s:%d%s', $repo_parsed["scheme"], $this->authToken, $repo_parsed["host"], $port, $repo_parsed["path"]);
                         break;
                 }
             }
