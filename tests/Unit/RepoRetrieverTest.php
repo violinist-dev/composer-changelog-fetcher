@@ -141,6 +141,40 @@ class RepoRetrieverTest extends TestBase
                     ],
                 ],
             ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://x-token-auth:dummy@bitbucket.org/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://bitbucket.org/user2/private2',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://x-token-auth:dummy@bitbucket.org/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://www.bitbucket.org/user2/private2',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://user:token@bitbucket.org/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://www.bitbucket.org/user2/private2',
+                    ],
+                ],
+                'user:token',
+            ],
         ];
     }
 }
