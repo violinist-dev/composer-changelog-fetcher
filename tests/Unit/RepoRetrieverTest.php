@@ -35,7 +35,7 @@ class RepoRetrieverTest extends TestBase
     /**
      * @dataProvider providerTestClone
      */
-    public function testClone(string $expected_path, string $repo_path, $data)
+    public function testClone(string $expected_path, string $repo_path, $data, $token = 'dummy')
     {
         $mock_process = $this->createMock(Process::class);
         $mock_factory = $this->createMock(ProcessFactoryInterface::class);
@@ -44,7 +44,7 @@ class RepoRetrieverTest extends TestBase
             ->with(['git', 'clone', $repo_path, $expected_path])
             ->willReturn($mock_process);
         $retriever = new DependencyRepoRetriever($mock_factory);
-        $retriever->setAuthToken('dummy');
+        $retriever->setAuthToken($token);
         $this->assertEquals($expected_path, $retriever->retrieveDependencyRepo($data));
     }
 
@@ -59,6 +59,41 @@ class RepoRetrieverTest extends TestBase
                     'source' => (object) [
                         'type' => 'git',
                         'url' => 'https://github.com/psr/log',
+                    ],
+                ],
+                null,
+            ],
+            [
+                '/tmp/e9a8b66d7a4bac57a08b8f0f2664c50f',
+                'https://x-access-token:dummy@github.com/psr/log',
+                (object) [
+                    'name' => 'psr/log',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://github.com/psr/log',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/e9a8b66d7a4bac57a08b8f0f2664c50f',
+                'https://www.github.com/psr/log',
+                (object) [
+                    'name' => 'psr/log',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://www.github.com/psr/log',
+                    ],
+                ],
+                null,
+            ],
+            [
+                '/tmp/e9a8b66d7a4bac57a08b8f0f2664c50f',
+                'https://x-access-token:dummy@github.com/psr/log',
+                (object) [
+                    'name' => 'psr/log',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://www.github.com/psr/log',
                     ],
                 ],
             ],
@@ -81,6 +116,106 @@ class RepoRetrieverTest extends TestBase
                     'source' => (object) [
                         'type' => 'git',
                         'url' => 'git@bitbucket.org:user/private',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://oauth2:dummy@gitlab.com/user/private',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://gitlab.com/user/private',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://oauth2:dummy@gitlab.com/user/private',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://www.gitlab.com/user/private',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://x-token-auth:dummy@bitbucket.org/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://bitbucket.org/user2/private2',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://x-token-auth:dummy@bitbucket.org/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://www.bitbucket.org/user2/private2',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://user:token@bitbucket.org/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://www.bitbucket.org/user2/private2',
+                    ],
+                ],
+                'user:token',
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://oauth2:dummy@gitlab.acme.com/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://gitlab.acme.com/user2/private2',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'http://oauth2:dummy@gitlab.acme.com/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'http://gitlab.acme.com/user2/private2',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'http://oauth2:dummy@gitlab.acme.com:9982/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'http://gitlab.acme.com:9982/user2/private2',
+                    ],
+                ],
+            ],
+            [
+                '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
+                'https://oauth2:dummy@gitlab.acme.com:2235/user2/private2',
+                (object) [
+                    'name' => 'user/private',
+                    'source' => (object) [
+                        'type' => 'git',
+                        'url' => 'https://gitlab.acme.com:2235/user2/private2',
                     ],
                 ],
             ],
