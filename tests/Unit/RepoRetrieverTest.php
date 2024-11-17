@@ -177,7 +177,7 @@ class RepoRetrieverTest extends TestBase
             ],
             [
                 '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
-                'https://oauth2:dummy@gitlab.acme.com:443/user2/private2',
+                'https://oauth2:dummy@gitlab.acme.com/user2/private2',
                 (object) [
                     'name' => 'user/private',
                     'source' => (object) [
@@ -188,7 +188,7 @@ class RepoRetrieverTest extends TestBase
             ],
             [
                 '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
-                'http://oauth2:dummy@gitlab.acme.com:80/user2/private2',
+                'http://oauth2:dummy@gitlab.acme.com/user2/private2',
                 (object) [
                     'name' => 'user/private',
                     'source' => (object) [
