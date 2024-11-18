@@ -34,9 +34,26 @@ class DependencyRepoRetriever
         // We could have this cached in the md5 of the package name.
         $clone_path = '/tmp/' . md5($data->name);
         $repo_path = $data->source->url;
+        $clone_urls_to_try = [
+            $repo_path,
+        ];
         if (!empty($this->authToken)) {
-            $repo_path = ToCloneUrl::fromRepoAndToken($repo_path, $this->authToken);
+            $clone_urls_to_try[] = ToCloneUrl::fromRepoAndToken($repo_path, $this->authToken);
+            // Make sure we don't do the same twice though.
+            $clone_urls_to_try = array_unique($clone_urls_to_try);
         }
+        foreach ($clone_urls_to_try as $clone_path_to_try) {
+            try {
+                return $this->cloneOrPull($clone_path, $clone_path_to_try);
+            } catch (\Exception $e) {
+                // Just try the next one.
+            }
+        }
+        throw new \Exception('Could not clone or pull the repo');
+    }
+
+    protected function cloneOrPull($clone_path, $repo_path)
+    {
         if (!file_exists($clone_path)) {
             $command = ['git', 'clone', $repo_path, $clone_path];
         } else {
