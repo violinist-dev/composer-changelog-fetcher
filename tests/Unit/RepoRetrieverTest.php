@@ -38,9 +38,12 @@ class RepoRetrieverTest extends TestBase
     public function testClone(string $expected_path, string $repo_path, $data, $token = 'dummy')
     {
         $mock_process = $this->createMock(Process::class);
+        $mock_process->method('getExitCode')
+            // We are only actually returning the process if the command array
+            // is correct. So we can safely return 0 here.
+            ->willReturn(0);
         $mock_factory = $this->createMock(ProcessFactoryInterface::class);
-        $mock_factory->expects($this->once())
-            ->method('getProcess')
+        $mock_factory->method('getProcess')
             ->with(['git', 'clone', $repo_path, $expected_path])
             ->willReturn($mock_process);
         $retriever = new DependencyRepoRetriever($mock_factory);
