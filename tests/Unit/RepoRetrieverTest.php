@@ -27,7 +27,7 @@ class RepoRetrieverTest extends TestBase
         $mock_factory->method('getProcess')
             ->willReturn($mock_process);
         $data = $this->getTestData();
-        $this->expectExceptionMessage('Wrong exit code from retrieving git repo: 1');
+        $this->expectExceptionMessage('Could not clone or pull the repo');
         $retriever = new DependencyRepoRetriever($mock_factory);
         $retriever->retrieveDependencyRepo($data);
     }
