@@ -113,7 +113,7 @@ class RepoRetrieverTest extends TestBase
             ],
             [
                 '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
-                'https://x-token-auth:dummy@bitbucket.org/user/private',
+                'https://x-token-auth:dummy@bitbucket.org/user/private.git',
                 (object) [
                     'name' => 'user/private',
                     'source' => (object) [
