@@ -168,7 +168,7 @@ class RepoRetrieverTest extends TestBase
             ],
             [
                 '/tmp/6ff4ca3539dc55131d6ca6fded5d2f0e',
-                'https://user:token@bitbucket.org/user2/private2',
+                'https://user:token@bitbucket.org/user2/private2.git',
                 (object) [
                     'name' => 'user/private',
                     'source' => (object) [
