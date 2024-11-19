@@ -31,6 +31,11 @@ class ChangelogRetriever
         $this->processFactory = $processFactory;
     }
 
+    public function getRetriever() : DependencyRepoRetriever
+    {
+        return $this->retriever;
+    }
+
     public function retrieveTagsBetweenShas($lockdata, $package_name, $sha1, $sha2) : array
     {
         $clone_path = $this->getClonePathAndRetrieveRepo($lockdata, $package_name);
